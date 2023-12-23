@@ -5,6 +5,12 @@ import java.util.List;
 
 public class ScratchCardParser {
 
+    List<ScratchCard> parseLines(List<String> lines) {
+        return lines.stream()
+                .map(this::parse)
+                .toList();
+    }
+
     ScratchCard parse(String line) {
 
         String numbers = line.split(":")[1].trim();

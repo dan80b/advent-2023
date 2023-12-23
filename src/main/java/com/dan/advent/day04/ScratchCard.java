@@ -1,5 +1,6 @@
 package com.dan.advent.day04;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -10,6 +11,9 @@ public class ScratchCard {
 
     private final List<Integer> winningNumbers;
     private final List<Integer> ownNumbers;
+
+    @Getter
+    private int count = 1;
 
     int matches() {
         return winningNumbers.stream()
@@ -25,5 +29,9 @@ public class ScratchCard {
         } else {
             return (int) Math.pow(2, matches - 1);
         }
+    }
+
+    void increaseCount(int amount) {
+        count += amount;
     }
 }

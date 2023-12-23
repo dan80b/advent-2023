@@ -7,11 +7,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PointsCalculator {
 
-    private final ScratchCardParser parser;
-
-    int calculate(List<String> lines) {
-        return lines.stream()
-                .map(parser::parse)
+    int calculate(List<ScratchCard> cards) {
+        return cards.stream()
                 .map(ScratchCard::points)
                 .reduce(0, Integer::sum);
     }
