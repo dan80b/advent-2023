@@ -6,28 +6,27 @@ import java.util.List;
 
 public class AlmanacParser {
 
+    private boolean isSeedToSoil = false;
+    private boolean isSoilToFertilizer = false;
+    private boolean isFertilizerToWater = false;
+    private boolean isWaterToLight = false;
+    private boolean isLightToTemperature = false;
+    private boolean isTemperatureToHumidity = false;
+    private boolean isHumidityToLocation = false;
+
+    private final List<AlmanacLine> seedToSoilLines = new ArrayList<>();
+    private final List<AlmanacLine> soilToFertilizerLines = new ArrayList<>();
+    private final List<AlmanacLine> fertilizerToWaterLines = new ArrayList<>();
+    private final List<AlmanacLine> waterToLightLines = new ArrayList<>();
+    private final List<AlmanacLine> lightToTemperatureLines = new ArrayList<>();
+    private final List<AlmanacLine> temperatureToHumidityLines = new ArrayList<>();
+    private final List<AlmanacLine> humidityToLocationLines = new ArrayList<>();
+
     Almanac parse(List<String> lines) {
 
         List<Long> seeds = null;
 
-        boolean isSeedToSoil = false;
-        boolean isSoilToFertilizer = false;
-        boolean isFertilizerToWater = false;
-        boolean isWaterToLight = false;
-        boolean isLightToTemperature = false;
-        boolean isTemperatureToHumidity = false;
-        boolean isHumidityToLocation = false;
-
-        List<AlmanacLine> seedToSoilLines = new ArrayList<>();
-        List<AlmanacLine> soilToFertilizerLines = new ArrayList<>();
-        List<AlmanacLine> fertilizerToWaterLines = new ArrayList<>();
-        List<AlmanacLine> waterToLightLines = new ArrayList<>();
-        List<AlmanacLine> lightToTemperatureLines = new ArrayList<>();
-        List<AlmanacLine> temperatureToHumidityLines = new ArrayList<>();
-        List<AlmanacLine> humidityToLocationLines = new ArrayList<>();
-
         for (String line : lines) {
-            System.out.println("Line: " + line);
             if (line.startsWith("seeds")) {
                 seeds = parseSeeds(line);
             } else if (line.startsWith("seed-to-soil map")) {
@@ -59,26 +58,21 @@ public class AlmanacParser {
             } else if (isHumidityToLocation && !line.isEmpty()) {
                 humidityToLocationLines.add(parseAlmanacLine(line));
             } else if (line.isEmpty()) {
-                isSeedToSoil = false;
-                isSoilToFertilizer = false;
-                isFertilizerToWater = false;
-                isWaterToLight = false;
-                isLightToTemperature = false;
-                isTemperatureToHumidity = false;
-                isHumidityToLocation = false;
+                resetFlags();
             }
-
         }
 
         return new Almanac(
                 seeds,
-                new AlmanacMap(seedToSoilLines),
-                new AlmanacMap(soilToFertilizerLines),
-                new AlmanacMap(fertilizerToWaterLines),
-                new AlmanacMap(waterToLightLines),
-                new AlmanacMap(lightToTemperatureLines),
-                new AlmanacMap(temperatureToHumidityLines),
-                new AlmanacMap(humidityToLocationLines));
+                List.of(
+                        new AlmanacMap(seedToSoilLines),
+                        new AlmanacMap(soilToFertilizerLines),
+                        new AlmanacMap(fertilizerToWaterLines),
+                        new AlmanacMap(waterToLightLines),
+                        new AlmanacMap(lightToTemperatureLines),
+                        new AlmanacMap(temperatureToHumidityLines),
+                        new AlmanacMap(humidityToLocationLines))
+        );
     }
 
     private List<Long> parseSeeds(String line) {
@@ -91,5 +85,15 @@ public class AlmanacParser {
     private AlmanacLine parseAlmanacLine(String line) {
         String[] numbers = line.split(" ");
         return new AlmanacLine(Long.parseLong(numbers[0]), Long.parseLong(numbers[1]), Long.parseLong(numbers[2]));
+    }
+
+    private void resetFlags() {
+        isSeedToSoil = false;
+        isSoilToFertilizer = false;
+        isFertilizerToWater = false;
+        isWaterToLight = false;
+        isLightToTemperature = false;
+        isTemperatureToHumidity = false;
+        isHumidityToLocation = false;
     }
 }
