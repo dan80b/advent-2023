@@ -15,9 +15,9 @@ public class Main {
 
             List<String> lines = documentReader.readLines("input_day05.txt");
             Almanac almanac = parser.parse(lines);
-            long lowestLocation = almanac.lowestLocation();
 
-            System.out.println("Lowest location is: " + lowestLocation); //part1: 174137457
+            System.out.println("Lowest location is: " + almanac.lowestLocation()); //part1: 174137457
+            System.out.println("Lowest location for interval is: " + almanac.lowestLocation2()); //part2: 1493866
 
         } catch (Exception e) {
             System.out.println("Error when processing almanac: " + e.getMessage());
