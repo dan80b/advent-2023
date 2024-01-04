@@ -17,5 +17,8 @@ public class RaceTest {
 
         Race race3 = new Race(30, 200);
         assertEquals(9, race3.winningWays());
+
+        Race race4 = new Race(71530L, 940200L);
+        assertEquals(71503, race4.winningWays());
     }
 }

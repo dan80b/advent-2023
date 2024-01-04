@@ -22,6 +22,11 @@ public class Main {
 
             System.out.println("Total wining was are : " + totalWays); //part 1: 316800
 
+            Race race = parser.parseOneRace(lines);
+            int totalWays2 = race.winningWays();
+
+            System.out.println("Total wining ways are 2: " + totalWays2); //part2: 45647654
+
         } catch (Exception e) {
             System.out.println("Error when processing races: " + e.getMessage());
             e.printStackTrace();
