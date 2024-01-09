@@ -22,7 +22,21 @@ public class CamelCardsServiceTest {
         handsMap.put(new Hand(K, T, J, J, T), 220);
         handsMap.put(new Hand(Q, Q, Q, J, A), 483);
 
-        int winnings = camelCardsService.calculateWinnings(handsMap);
+        int winnings = camelCardsService.calculateWinnings(handsMap, false);
         assertEquals(6440, winnings);
+    }
+
+    @Test
+    void calculateWinningsWithJoker() {
+
+        Map<Hand, Integer> handsMap = new HashMap<>();
+        handsMap.put(new Hand(C3, C2, T, C3, K), 765);
+        handsMap.put(new Hand(T, C5, C5, J, C5), 684);
+        handsMap.put(new Hand(K, K, C6, C7, C7), 28);
+        handsMap.put(new Hand(K, T, J, J, T), 220);
+        handsMap.put(new Hand(Q, Q, Q, J, A), 483);
+
+        int winnings = camelCardsService.calculateWinnings(handsMap, true);
+        assertEquals(5905, winnings);
     }
 }

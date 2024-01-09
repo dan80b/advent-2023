@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class CamelCardsService {
 
-    int calculateWinnings(Map<Hand, Integer> handMap) {
+    int calculateWinnings(Map<Hand, Integer> handMap, boolean isJoker) {
 
         List<Hand> sortedHands = handMap.keySet().stream()
-                .sorted(new HandComparator())
+                .sorted(new HandComparator(isJoker))
                 .toList();
 
         int totalWinnings = 0;

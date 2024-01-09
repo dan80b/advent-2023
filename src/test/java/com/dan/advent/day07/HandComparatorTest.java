@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class HandComparatorTest {
 
-    private final HandComparator handComparator = new HandComparator();
+    private final HandComparator handComparator = new HandComparator(false);
 
     @Test
     void compare1() {

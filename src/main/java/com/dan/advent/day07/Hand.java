@@ -36,6 +36,19 @@ public class Hand {
                 .reduce(0, Integer::max);
     }
 
+    Hand replaceJokerWith(Card card) {
+        Card newCard1 = replaceIfJoker(card1, card);
+        Card newCard2 = replaceIfJoker(card2, card);
+        Card newCard3 = replaceIfJoker(card3, card);
+        Card newCard4 = replaceIfJoker(card4, card);
+        Card newCard5 = replaceIfJoker(card5, card);
+        return new Hand(newCard1, newCard2, newCard3, newCard4, newCard5);
+    }
+
+    private Card replaceIfJoker(Card oldCard, Card newCard) {
+        return oldCard == Card.J ? newCard : oldCard;
+    }
+
     boolean isFive() {
         return maxOfType == 5;
     }
@@ -98,5 +111,9 @@ public class Hand {
         } else {
             return 0;
         }
+    }
+
+    Hand transformed() {
+        return new HandTransformer().transform(this);
     }
 }
