@@ -28,6 +28,14 @@ public class Vertex {
         return END_VERTEX.equals(name);
     }
 
+    boolean isGhostStart() {
+        return name.endsWith("A");
+    }
+
+    boolean isGhostEnd() {
+        return name.endsWith("Z");
+    }
+
     @Override
     public String toString() {
         return name;

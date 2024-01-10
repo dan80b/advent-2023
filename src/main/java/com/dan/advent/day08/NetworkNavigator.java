@@ -5,11 +5,25 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class NetworkNavigator {
 
-    int countSteps(Network network) {
-        NetworkPosition position = new NetworkPosition(network.getStart(), network.getDirections());
-        while (!position.isEndPosition()) {
+    private final LcmCalculator lcmCalculator;
+
+    long countSteps(Network network) {
+        return countSteps(network.getStart(), network.getDirections(), false);
+    }
+
+    long countGhostSteps(Network network) {
+        List<Long> steps = network.getStarts().stream()
+                .map(v -> countSteps(v, network.getDirections(), true))
+                .toList();
+        return lcmCalculator.lcm(steps);
+    }
+
+    long countSteps(Vertex vertex, List<Direction> directions, boolean isGhost) {
+        NetworkPosition position = new NetworkPosition(isGhost, vertex, directions);
+        while (position.isNotEndPosition()) {
             position = position.nextPosition();
         }
         return position.getSteps();
@@ -18,6 +32,7 @@ public class NetworkNavigator {
     @RequiredArgsConstructor
     private static class NetworkPosition {
 
+        private final boolean isGhost;
         private final Vertex vertex;
         private final List<Direction> directions;
         private final int directionIndex;
@@ -25,12 +40,12 @@ public class NetworkNavigator {
         @Getter
         private final int steps;
 
-        NetworkPosition(Vertex vertex, List<Direction> directions) {
-            this(vertex, directions, 0, 0);
+        NetworkPosition(boolean isGhost, Vertex vertex, List<Direction> directions) {
+            this(isGhost, vertex, directions, 0, 0);
         }
 
-        boolean isEndPosition() {
-            return vertex.isEnd();
+        boolean isNotEndPosition() {
+            return isGhost ? !vertex.isGhostEnd() : !vertex.isEnd();
         }
 
         Vertex nextVertex() {
@@ -40,7 +55,7 @@ public class NetworkNavigator {
 
         NetworkPosition nextPosition() {
             int index = nextDirectionIndex();
-            return new NetworkPosition(nextVertex(), directions, index, steps + 1);
+            return new NetworkPosition(isGhost, nextVertex(), directions, index, steps + 1);
         }
 
         private int nextDirectionIndex() {

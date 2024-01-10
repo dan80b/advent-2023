@@ -30,7 +30,8 @@ public class NetworkParser {
         }
 
         Vertex startVertex = getStartVertex(vertexList);
-        return new Network(directions, startVertex);
+        List<Vertex> startVertexList = getStartVertexList(vertexList);
+        return new Network(directions, startVertex, startVertexList);
     }
 
     private Vertex getVertex(Map<String, Vertex> vertexMap, String name) {
@@ -69,5 +70,11 @@ public class NetworkParser {
                 .filter(Vertex::isStart)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No starting vertex found"));
+    }
+
+    private List<Vertex> getStartVertexList(List<Vertex> vertexList) {
+        return vertexList.stream()
+                .filter(Vertex::isGhostStart)
+                .toList();
     }
 }

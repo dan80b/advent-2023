@@ -10,4 +10,5 @@ import java.util.List;
 public class Network {
     private final List<Direction> directions;
     private final Vertex start;
+    private final List<Vertex> starts;
 }
