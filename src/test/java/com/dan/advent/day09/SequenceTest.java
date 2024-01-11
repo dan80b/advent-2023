@@ -33,4 +33,16 @@ public class SequenceTest {
         Sequence sequence = new Sequence(List.of(0, 3, 6, 9, 12, 15));
         assertEquals(15, sequence.lastValue());
     }
+
+    @Test
+    void previousValue() {
+        Sequence sequence = new Sequence(List.of(0, 3, 6, 9, 12, 15));
+        assertEquals(-3, sequence.previousValue(3));
+    }
+
+    @Test
+    void firstValue() {
+        Sequence sequence = new Sequence(List.of(0, 3, 6, 9, 12, 15));
+        assertEquals(0, sequence.firstValue());
+    }
 }

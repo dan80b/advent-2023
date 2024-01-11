@@ -32,4 +32,22 @@ public class HistoryTest {
         History history = new History(new Sequence(List.of(10, 13, 16, 21, 30, 45)));
         assertEquals(68, history.nextValue());
     }
+
+    @Test
+    void previousValue() {
+        History history = new History(new Sequence(List.of(0, 3, 6, 9, 12, 15)));
+        assertEquals(-3, history.previousValue());
+    }
+
+    @Test
+    void previousValue2() {
+        History history = new History(new Sequence(List.of(1, 3, 6, 10, 15, 21)));
+        assertEquals(0, history.previousValue());
+    }
+
+    @Test
+    void previousValue3() {
+        History history = new History(new Sequence(List.of(10, 13, 16, 21, 30, 45)));
+        assertEquals(5, history.previousValue());
+    }
 }

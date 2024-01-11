@@ -39,4 +39,12 @@ public class Sequence {
     int lastValue() {
         return values.get(values.size() - 1);
     }
+
+    int previousValue(int difference) {
+        return firstValue() - difference;
+    }
+
+    int firstValue() {
+        return values.get(0);
+    }
 }

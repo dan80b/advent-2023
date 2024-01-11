@@ -32,4 +32,14 @@ public class History {
         }
         return nextValue;
     }
+
+    int previousValue() {
+        Sequence lastSequence = sequences.get(sequences.size() - 1);
+        int previousValue = lastSequence.firstValue();
+        for (int i = sequences.size() - 2; i >= 0; i--) {
+            Sequence current = sequences.get(i);
+            previousValue = current.previousValue(previousValue);
+        }
+        return previousValue;
+    }
 }
